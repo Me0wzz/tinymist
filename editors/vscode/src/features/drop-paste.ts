@@ -658,8 +658,19 @@ export function getDesiredNewFilePath(
 ): vscode.Uri {
   const docUri = getParentDocumentUri(document.uri);
 
+  const extension = extname(file.name);
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = (now.getMonth() + 1).toString().padStart(2, '0');
+  const day = now.getDate().toString().padStart(2, '0');
+  const hours = now.getHours().toString().padStart(2, '0');
+  const minutes = now.getMinutes().toString().padStart(2, '0');
+  const seconds = now.getSeconds().toString().padStart(2, '0');
+  const timestampFileName = `${year}-${month}-${day}-${hours}-${minutes}-${seconds}${extension}`;
+
+
   // Default to next to current file
-  return vscode.Uri.joinPath(docUri, "..", file.name);
+  return vscode.Uri.joinPath(docUri, "..","assets", timestampFileName);
 }
 
 function getParentDocumentUri(uri: vscode.Uri): vscode.Uri {
